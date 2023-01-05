@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -179,10 +180,87 @@ namespace NodeClass
 
         }
 
-        public static Node<T> DeleteValue(Node<T> value)
+        /// <summary>
+        /// פעולה המוחקת את החוליה העוקבת
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns>מחזירה את החוליה שנמחקה</returns>
+        public static Node<T> DeleteAfterNode<T>(Node<T> node )
         {
+            Node<T> del = node.GetNext();//החוליה למחיקה
+            //נבדוק שזו לא החוליה האחרונה
+            if (del != null)
+            {
+                node.SetNext(del.GetNext());
+                del.SetNext(null);
+            }
+            //  אחרת 
+            //זו עכשיו החוליה האחרונה
+            else
+                node.SetNext(null);
+
+            return del;
+        }
+
+        public static void AddAfterNode<T>(Node<T> node,T val)
+        {
+            node.SetNext(new Node<T>(val, node.GetNext()));
+        }
+
+
+        public static Node<char> Reverse(Node<char> text)
+        {
+            Node<char> tail = text;//החוליה הראשונה תהפוך בסוף התהליך לזנב
+            Node<char> head = text;//בשלב ההתחלתי הראש הוא החוליה הראשונה
+            Node<char> next=tail.GetNext();
+            while (tail.HasNext())
+            {
+                tail.SetNext(next.GetNext());
+                next.SetNext(head);
+                head = next;
+                next = tail.GetNext();
+
+            }
+
+            return head;
+        }
+
+        public static Node<char> ReverseWithDummy(Node<char>text)
+        {
+            Node<char> tail = text;//החוליה הראשונה תהפוך בסוף התהליך לזנב
+            Node<char> dummy = new Node<char>(' ', text);//ניצור חוליה ראשונה פיקטיבית
+            Node<char> next = tail.GetNext();
+            while(tail.HasNext())
+            {
+                tail.SetNext(next.GetNext());
+                next.SetNext(dummy.GetNext());
+                dummy.SetNext(next);
+                
+            }
+            return 
+        }
+       
+        public static Node<char>ReverseVer03(Node<char>text)
+        {
+            Node<char> current = text;
+            Node<char> tail = text;//וכרגע היא גם הזנב...
+
+            //נגיע לחוליה האחרונה
+            while (current.HasNext())
+            {
+                current = current.GetNext();
+            }
+            Node<char> head = current;//החוליה האחרונה תהפוך לראשונה
+            current = tail;
+            while(current==head)
+            {
+              //השלמה של הקוד   
+            }
+            return head;
 
         }
+       
+
 
     }
 }
