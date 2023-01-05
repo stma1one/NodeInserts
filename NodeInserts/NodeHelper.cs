@@ -237,7 +237,7 @@ namespace NodeClass
                 dummy.SetNext(next);
                 
             }
-            return 
+            return dummy.GetNext();
         }
        
         public static Node<char>ReverseVer03(Node<char>text)
