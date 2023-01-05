@@ -259,6 +259,43 @@ namespace NodeClass
             return head;
 
         }
+
+        public static void AddAfterNode1<T>(Node<T> node,T value)
+        {
+            node.SetNext(new Node<T>(value, node.GetNext()));
+        }
+        public static Node<int> WithoutDuplicates(Node<int> list)
+        {
+            Node<int> head = new Node<int>(list.GetValue());
+            Node<int> tail = head;
+            list = list.GetNext(); //כבר הכנסתי את הערך אפשר להקדם
+            //כל עוד לא הגעתי לסוף של הרשימה המקורית
+            while (list != null)
+            {
+                if(!IsExists(head,list.GetValue()))
+                {
+                    //tail.SetNext(new Node<int>(list.GetValue()));
+                    //tail = tail.GetNext();
+                    AddAfterNode1(tail,list.GetValue());
+                    tail = tail.GetNext();
+                }
+                list = list.GetNext();
+            }
+            return head;
+
+        }
+
+        public static bool IsExists<T>(Node<T> list, T value)
+        {
+            while(list!=null)
+            {
+                if (list.GetValue().Equals(value))
+                    return true;
+                list = list.GetNext();
+            }
+            return false;   
+
+        }
        
 
 
